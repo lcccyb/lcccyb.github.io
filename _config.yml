@@ -1,27 +1,26 @@
 # Site settings
-title: 博客名字 # 你的博客名字，可以定义修订
+title: 浮生如梦 # 你的博客名字，可以定义修订
 header-img: "img/green.jpg"
 tagline: "cn"  
-description: "这是我的博客"  # 一句话描述你的博客
+description: "记录生活的点点滴滴"  # 一句话描述你的博客
 baseurl: ""
-url: "http://cnfeat"  # 此处填写你的博客地址 
+url: "https://lcccyb.github.io  # 此处填写你的博客地址 
 
 # About/contact
 owner: 
-  name: "作者名字" # 填写作者信息：名字
-  email: X@gmail.com # 填写作者信息：邮箱
+  name: "陈衍斌" # 填写作者信息：名字
+  email: chenyanbin.1997@163.com # 填写作者信息：邮箱
   bio: "你的博客描述" # 填写作者信息：博客描述
 
 # Data
 gavatar: img/favicon.png # 浏览器地址栏小图标，可自定义更改
 favicon: img/favicon.png # 浏览器地址栏小图标，可自定义更改
 
-douban_username:  # 你的豆瓣id
-twitter_username: 
-github_username: 
+# douban_username:  # 你的豆瓣id
+twitter_username: https://twitter.com/lcccyb
+github_username: https//github.com/lcccyb
 facebook_username: 
-weibo_username: 
-zhihu_username: 
+weibo_username: https://weibo.com/6024621509/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1
 
 # Build settings  
 # use Github Flavored Markdown !important  
@@ -43,7 +42,7 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-      author: "你的名字" # 你的名字
+      author: "陈衍斌" # 你的名字
       header-img: "img/green.jpg" # We don't want posts without a header image, that whould mean white on white
 
 # Comments 
