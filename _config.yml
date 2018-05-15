@@ -1,10 +1,10 @@
 # Site settings
-title: “浮生如梦” # 你的博客名字，可以定义修订
+title: 浮生如梦 # 你的博客名字，可以定义修订
 header-img: "img/green.jpg"
 tagline: "cn"  
 description: "记录生活的点点滴滴"  # 一句话描述你的博客
 baseurl: ""
-url: "https://lcccyb.github.io  # 此处填写你的博客地址 
+url: "https://terry81027.github.io  # 此处填写你的博客地址 
 
 # About/contact
 owner: 
@@ -17,10 +17,10 @@ gavatar: img/favicon.png # 浏览器地址栏小图标，可自定义更改
 favicon: img/favicon.png # 浏览器地址栏小图标，可自定义更改
 
 # douban_username:  # 你的豆瓣id
-twitter_username: https://twitter.com/lcccyb
-github_username: https//github.com/lcccyb
-facebook_username: 
-weibo_username: https://weibo.com/6024621509/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1
+twitter_username: lcccyb
+github_username: lcccyb
+facebook_username: lcccyb
+weibo_username: 吃货实力NF
 
 # Build settings  
 # use Github Flavored Markdown !important  
