@@ -1,7 +1,7 @@
 ---
 layout: page
-title: "About"
-description: "cyb的米奇妙妙屋" 
+title: "浮生如梦"
+description: "cyb的博客" 
 header-img: "img/green.jpg"
 ---
 
