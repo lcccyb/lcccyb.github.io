@@ -1,0 +1,705 @@
+## 现代操作系统应用开发
+
+###1.XAML
+
+- XAML只是特定格式的XML，它遵循所有XML的规则。XML的使用者就是将我们的代码变成windows10可执行文件的编译器；
+- XAML是一种简单的创建类的实例并设置属性的方法，代码量比C#节省了很多。
+- XAML中的类型转换器使得用户在设置属性时能用一些非常简洁的字符来代替冗长的类型名和枚举值。     
+
+XAML -XML Syntax, create instances of Classes that define the UI
+
+Type Converters - Convert literal strings in XAML into enumerations, instances of classes, etc
+
+### 2.Grid && StackPanel
+
+* Grid与StackPanel都会将某些特定的控件如image、retangular自动扩充至100%，但Grid会将其单元格内的元素自动居中，且Grid内元素可以重叠，而StackPanel就不行了。
+* 所以大部分布局可以用StackPanel进行，但是并不是说Grid一无是处。它在适应性变化中还是能齐到很好的作用，而这是StackPanel无法做到的。
+
+### 3.Understanding Default Properties, Complex Properties and the property Element Syntax
+
+Default Property...Ex. sets Content property
+
+```xml
+<Button>click Me</Button>
+```
+
+Complex Properties - Break out a property into its own element syntax:
+
+```xml
+<Button Name="ClickMeButton"
+        HorizonalAlignment="Left"
+        Content="Click Me"
+        Margin="20,20,0,0"
+        VerticalAlignment="Top"
+        Click="ClickMeButton_Click"
+        Width="200"
+        Heigh="100"
+        >
+        <Button.Background>
+            <LinearGradientBrush Endpoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black" Offset="0"/>
+                <GradientStop Color="Red" Offset="1"/>
+            </LinearGradientBrush>
+        </Button.Background>
+</Button>
+```
+
+Elements put themselves into rows and columns using attached property syntax:
+
+```xml
+...
+ ...
+ <Button Grid.Row="0" />
+</Grid>
+```
+
+* When referencing Rows and Columns ... 0-based.
+* There's always one default implicit cell: Row 0, Column 0
+* If not specified, elemnt will be in the default cell.
+
+###4.Understanding XAML Schemas and Namespace Declarations
+
+* Don't touch the schema stuff - It's necessary!
+* Schemas define for XAML，for UWP，for designer support，etc.
+* Namespaces tell XAML parser where to find the definition rules for a given element in the XAML.
+
+### 5.XAML layout with Grids
+
+Layout controls don't have a content property ...
+
+they have a Children property of type UIElementCollection.
+
+By embedding any control inside of a layout control，you are implicitly calling the Add method of the Children Collection Property.
+
+```xml
+<Grid Background="Black">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+    </Grid.RowDefinition>
+    <Grid.ColumnDefinitions></Grid.ColumnDefinition>
+</Grid>
+```
+
+  Sizes expressed in terms of : 
+
+ - Auto -Use the largest value of elements it contains to define the width / height 
+ - *(star sizing) -Utilize all the available space 
+- 1* -of all available space, give me 1 “share” 
+- 2* -of all available space, give me 2 “shares” 
+- 3* -of all available space, give me 3 “shares”
+
+6 total shares … 3* would be 50% of the available width / height.
+
+### 6.XAML layout with StackPanel
+
+```xml
+<StackPanel>
+    <TextBlock>Top</TextBlock>
+    <TextBlock>Bottom</TextBlock>
+</StackPanel>
+```
+
+* Vertical Orientation by default.
+* Left-to-right flow by default when Horizontal aligment.
+* Most layouts will combine multiple layout controls.
+* Grid will overlap controls. StackPanel will stack them.
+
+### 7.SplitView
+
+SplitView可用于实现菜单。
+
+* 隐藏在展示部分旁边的部分，我们称之为Pane
+* 很容易背覆盖或者被推开的用于展示的部分，我们称之为Content属性
+  * IsPaneOpen
+  * DisplayMode
+  * Inline 把Content推开来让Pane表示，但Pane关闭时不显示
+  * Overlap 把Content完全遮挡住，但Pane关闭时不显示
+  * CompactOverlay 把Content完全遮挡住，但Pane关闭时有显示 
+    * 需要设置CompactPaneLength
+  * CompactInline 把Content推开让Pane表示，但Pane关闭时显示
+  * CompactPaneLength 用于设置Pane关闭时的宽度
+  * OpenPaneLength 用于设置Pane打开时的宽度 
+
+### 8.Relative Panel
+
+It basically defines an area within which you can position and align child objects.
+
+* in relation to each other
+* or in relation to the parent panel
+* 用于在Relative Panel内定位的附加属性（Attach Property）有三大类：
+  * 面板对齐关系（Panel Alignment Relationship）：如将控件与面板顶端对其，左对齐等。
+  * 同级对齐关系（Sibling Alignment Relationship）：用于同级元素的对齐，如控件间的顶端对齐，左对齐等。
+  * 同级位置关系（Sibling Position Relationship）:用于放置同级元素，如控件的上、下、左、右等。
+
+以上优先级从高到低
+
+* 附加属性： 
+  * AlignRightWithPanel (True/False)
+  * AlignLeftWith (the name of controls)
+  * LeftOf (the name of controls)
+  * AlignVerticalCenterWith (the name of controls)
+  * AlignHorizontalCenterWithPanel (True/False)
+  * AlignBottomWithPanel (True/False)
+  * AlignTopWith (the name of controls)
+
+### 9.Navigation  
+
+APP > Window > Frame > MainPage
+
+You can load pages into a child frame or into the root frame.
+
+* 在UWP里，页面时存在于Frame Object里。
+* 当APP启动的时候，会有一个最高级的Application Object，在里面会有一个窗口，在桌面版本的UWP里，它会显示顶部的一栏，就是有“最小化”、“最大化”、“关闭”按钮，以及应用名的那一栏。在里面，是Frame，用于存放页面（Pages）。
+* 在APP.xaml.cs中会有向MainPage跳转的`rootFrame.Navigate(typeof(MainPage),e.Argument)`
+* 为了在Mainpage中像APP一样导入导出页面，我们可以在MainPage中定义一个Frame，然后在MainPage()函数中加入`MyFrame.Navigate(typeof(Page1))`，同时能使得MainPage中定义的导航栏能存在多个页面中
+* 定义跳转按钮
+
+```c#
+MyFrame.Navigate(typeof(Page1));
+```
+
+* 定义后退按钮
+
+```c#
+if(MyFrame.CanGoForward()) {
+	MyFrame.GoForward();
+}
+```
+
+* HyperlinkButton按钮
+
+```xml
+<HyperlinkButton Content="Go to Page 2" Click="HyperlinkButton_Click">
+<HyperlinkButton Content="Go to Microsoft.com" NavigateUri="http://www.microsoft.com">          
+```
+
+* 在定义MainPage外的页面时，使用Frame.Navigate而不是MyFrame。因为MyFrame是处于MainPage中，不在其它页面中。
+* 为了实现前进保留之前页面信息，我们可以在Frame.Navigate中引入第二个参数，实现数据的传递，如：
+
+```c#
+Frame.Navigate(typeof(Page1), TextBox.text);
+```
+
+同时，要在下一个页面中设置接受这个参数的方法。在对应Page的xaml.cs中的页面构造函数的下面加上OnNavigatedTo函数：
+
+```c#
+protected override void OnNavigatedTo(NavigationEventArgs e) {
+    var value = (string)e.Parameter;
+    TextBox.Text = Value;
+}
+```
+
+* 为了实现后退信息的保存，可以将所要保存的信息放在一个静态变量中（范围在本App内，加在App类中）：
+* Create a global varible by declaring a static internal field in the App class definition.
+
+```c#
+internal static string SomeImportant Value;
+```
+
+然后在每个页面的OnNavigatedTo函数中替换为：
+
+```c#
+if (!String.IsNullOrEmpty(App.SomeImportantvalue)) {
+    ValueTextBox.Text = App.SomeImportantValue;
+}
+```
+
+### 10.基本XAML控件
+
+注意：IsChecked是可空布尔类型（nullable bool），所以若想得到true or false那么需要将其强制性转换为bool。
+
+控件：
+
+* CheckBox（复选框） 
+  * Name
+  * Content
+  * Tapped 
+    * `CheckBoxResultTextBlock.Text = MyCheckBox.IsChecked.ToString()` 
+* RadioButton
+  * Name
+  * Content
+  * GroupName
+  * Checked 
+    * `RadioButtonTextBlock.Text=(bool)YesRadioButton.IsChecked ？ Yes : No;`
+* ComboBox 
+  * SelectionChanged
+  * 子标签： CombBoxItem 
+    * Content
+    * IsSelected
+
+```c#
+if (ComboBoxResultTextBlock == null) return;
+var combo = (ComboBox)sender;
+var item = (ComboBoxItem)combo.SelectedItem;
+ComboBoxResultTextBlock.Text = item.Content.ToString();
+```
+
+* ListBox：
+  * Name
+  * SelectionMode (Multiple/Single)
+  * SelectionChanged
+  * 子标签：ListBoxItem
+
+```c#
+var selectedItems = MyListBox.Items.Cast<ListBoxItem>()
+                    .Where(p => p.IsSelected)
+                    .Select(t => t.Content.ToString())
+                    .ToArray();
+ListBoxResultTextBlock.Text = string.Join(",", selectedItems);
+```
+
+* Image
+  * Source
+  * HorizontalAlignment
+  * Width
+  * Height
+  * Grid.Row()
+  * Grid.Column
+  * Stretch
+    * None
+    * Fill，将图片拉伸以填满空间
+    * Uniform，将图片按原比例缩放到一个正好的大小
+    * UniformToFill
+  * Margin
+* ToggleButton（切换按钮）
+  * Name
+  * Content
+  * IsThreeState
+  * Click`ToggleButtonResultTextBlock.Text=MyToggleButton.Ischeckes.ToString();`
+* ToggleSwitch（拨动开关）
+  * 复杂属性
+    * OffContent
+    * OnContent
+* TimePicker (时间选择器)
+  * ClockIdentifier (12HourClock/24HourClock)
+* CalendarDatePicker (日历选择器)
+  * PlaceholderText
+* CalendarView (日期查看)
+  * SelectionMode (Multiple、None、Single)
+  * SelectedDatesChanged
+  * 将选择的日期呈现出来
+
+```c#
+var selectedDates = sender.SelectedDates.Select(p => p.Date.Month.ToString() + "/" + p.Date.day.ToString()).ToArray();
+var values = string.Join(", ", selectedDates);
+CanlendarViewResultTextBlock.Text = values;
+```
+
+* Flyout
+  * MyFlyout.Hide() ;
+
+```xml
+<Button>
+    <Button.Flyout>
+        <Flyout x:Name="MyFlyout">
+          ....
+        </Flyout>
+    </Button.Flyout>
+</Button>         
+```
+
+* MenuFlyout
+  * Placement
+    * Bottom
+    * Full
+    * Left
+    * Right
+    * Top
+  * MenuFlyoutItem
+  * MenuFlyoutSubItem 
+    * 建议使用MenuFlyoutSubItem的Items属性，把下一级的菜单元素写到这个属性里
+  * MenuFlyoutSeparator (划线分隔)
+  * ToggleMenuFlyoutItem （被选中左侧有打勾）
+* AutoSuggestBox(建议列表)
+  * 如果在含有搜索特性的应用中，这个控件将非常有用
+  * 它的样式与我们用TextBox定义的搜索框差不多
+  * 它能随着我们输入的文本变化而缩小选择的范围 
+
+```c#
+var autoSuggestBox = (AutoSuggestBox)sender;
+var filtered = selectionItems.Where(p => p.StartsWith(autoSuggestBox.Text)).ToArray();
+autoSuggestBox.ItemsSource = filtered; 
+```
+
+其中，selectionItems是我们预先设置的一个字符数组。
+
+* * QueryIcon
+  * PlaceholderText
+  * TextChanged
+* Slider (滑块控件)
+* * Maximum
+  * Minimum
+* ProgressBar (进度条)
+* * Maximum
+  * Value
+
+```css
+Value="{x:Bind MySlider.Value, Mode=OneWay}"
+```
+
+* ProgressRing (进度圈)
+* IsActive （True/False）
+* 软件推荐
+* * XAML UI Control
+
+### 11.Hamburger Navigation
+
+* Character Map 的Segoe MDL2 Assets中找图标
+* 整体MainPage
+
+```xquery
+ <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <RelativePanel>
+            <Button Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" FontSize="36" Click="HamburgerButton_Click" />
+        </RelativePanel>
+        <SplitView Name="MySplitView" 
+                   Grid.Row="1" 
+                   DisplayMode="CompactOverlay" 
+                   OpenPaneLength="200" 
+                   CompactPaneLength="56" 
+                   HorizontalAlignment="Left">
+            <SplitView.Pane>
+                <ListBox SelectionMode="Single" 
+                         Name="IconsListBox" 
+                         SelectionChanged="IconsListBox_SelectionChanged">
+                    <ListBoxItem Name="ShareListBoxItem">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE72D;" />
+                            <TextBlock Text="Share" FontSize="24" Margin="20,0,0,0" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem Name="FavoritesListBoxItem">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE734;" />
+                            <TextBlock Text="Favorites" FontSize="24" Margin="20,0,0,0" />
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <TextBlock Name="ResultTextBlock" />
+            </SplitView.Content>
+        </SplitView>
+    </Grid>
+```
+* 后台
+
+```c#
+private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+{
+    MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+}
+private void IconsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+{
+    if (ShareListBoxItem.IsSelected) { ResultTextBlock.Text = "Share"; }
+    else if (FavoritesListBoxItem.IsSelected) { ResultTextBlock.Text = "Favorites"; }
+}         
+```
+
+### 12.TextBox 的 PlaceholderText=” “
+
+可以用于输入框提示语，一旦鼠标焦点在文本框中时，自动清除该提示语，否则就会显示该提示语（在没有任何输入的情况下）
+
+### 13.ScrollViewer
+
+* 属性：
+* * HorizontalScrollBarVisibility
+  * VertiacalScrollBarVisibility，设置为auto表明滚动条只在需要的时候显示，不需要的时候隐
+* 将ScrollViewer放在StackPanel中会导致滚动条不显示的情况，但是，如果把StackPanel作为ScrollViewer的子类就不会出现这种情况
+* 通常，我们会把ScrollViewer放在应用的整个可见区域中
+
+### 14.画布与图形
+
+* 都有Tapped属性设置事件
+* 放在画布中可以利用画布的附加属性管理这些图形控件
+* Canvas allows you to do absolute positioning via attached properties.
+* Line 
+* * x~1~
+  * x~2~
+  * Y1
+  * Y2
+  * Stroke(外围颜色)
+  * Fill(内部颜色)
+  * StrokeThickness
+  * StrokeEndLineCap （尾部的形状）
+  * StrokeStartLineCap
+* Polyline 
+* * StrokeStrokeThickness
+* * Fill
+* * Points
+* * StrokeLineJoin
+* * StrokeStartLineCap
+* Rectangle
+* Ellipse (椭圆)
+* Canvas.ZIndex：相当于三维中的Z轴，可以用来定义控件重叠的方式，即可以定义顶层为指定控件，ZIndex的值越大，那它所在的层次也就越高，最大值也就代表最高层次的控件。
+
+### 15.Page.Resources
+
+* 当我们要绑定一个resource的时候，需要的表达格式就是大括号里面有”StaticResource”,在加上resource的名字（key）。
+* 大括号时绑定的意思，而”StaticResource”这个词表明了我们所绑定资源的类型
+* 如果一个个设置就太复杂了，是否有类似于css中style那样作用于同一类的设置，那便是将style标签加入Resources中
+
+```xquery
+<Style TargetType="Button" x:Key="MyButtonStyle">
+    <Setter Property="Background" Value="Blue" />
+    <Setter Property="FontFamily" Value="Arial Black" />
+    <Setter Property="FontSize" Value="36" />
+</Style>
+```
+
+* 在控件中设置其Style属性
+
+```xml
+<Button Style="{StaticResource MyButtonStyle}" />          
+```
+
+* 如果我想将Resource应用在APP中的各个页面以及控件中，需要在APP.XAML中的Application.Resources元素上创建该Resources
+* 我们也可以将这些设置写入文件中，就像web一样将css写入文件中。
+* 创建Resource Dictionary,然后在我们想要使用的页面中调用它
+
+```xml
+<Page.Resources>
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Dictionary1.xaml">
+    </ResourceDictionary.MergedDictionaries>
+</Page.Resources>
+```
+
+以上的资源绑定是静态的，它只在APP首次运行时进行一次，所以APP的生命周期中它不会再发生改变。
+
+* 主题资源的设置使得我们开发的应用能够根据用户设备的主题设置来设置我们应用的样式。
+* 我们可以从不同的主题设置中选择，来实现用户选择的颜色和主题色，无论是桌面端、手机端还是Xbox
+* 可以请求主题颜色变化
+
+`<App RequestTheme="Light">`
+
+* 高对比度的主题会强行覆盖你的所有主题和风格。
+
+###16.VisualStateGroup
+
+```
+- StateTriggers 状态触发器
+- Setters 属性设置器
+```
+
+```xml
+<Grid Name="ColorGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualStatePhone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ColorGrid.Background" Value="Red" />
+                        <Setter Target="MessageTextBlock.FontSize" Value="18" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateTablet">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ColorGrid.Background" Value="Yellow" />
+                        <Setter Target="MessageTextBlock.FontSize" Value="36" />                 
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateDesktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ColorGrid.Background" Value="Blue" />
+                        <Setter Target="MessageTextBlock.FontSize" Value="54" />                 
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+```
+
+[源代码](https://github.com/Windows-Readiness/AbsoluteBeginnersWin10/blob/master/UWP-038/UWP-038/AdaptiveLayoutExample/AdaptiveLayoutExample/MainPage.xaml)
+
+```xml
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="First.(Grid.Row)" Value="0" />
+                        <Setter Target="First.(Grid.Column)" Value="0" />
+                        <Setter Target="Second.(Grid.Row)" Value="0" />
+                        <Setter Target="Second.(Grid.Column)" Value="1" />
+                        <Setter Target="Third.(Grid.Row)" Value="0" />
+                        <Setter Target="Third.(Grid.Column)" Value="2" />
+                        <Setter Target="First.(Grid.ColumnSpan)" Value="1" />
+                        <Setter Target="Second.(Grid.ColumnSpan)" Value="1" />
+                        <Setter Target="Third.(Grid.ColumnSpan)" Value="1" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="First.(Grid.Row)" Value="0" />
+                        <Setter Target="First.(Grid.Column)" Value="0" />
+                        <Setter Target="Second.(Grid.Row)" Value="1" />
+                        <Setter Target="Second.(Grid.Column)" Value="0" />
+                        <Setter Target="Third.(Grid.Row)" Value="2" />
+                        <Setter Target="Third.(Grid.Column)" Value="0" />
+                        <Setter Target="First.(Grid.ColumnSpan)" Value="3" />
+                        <Setter Target="Second.(Grid.ColumnSpan)" Value="3" />
+                        <Setter Target="Third.(Grid.ColumnSpan)" Value="3" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+```
+
+### 20.自适应设备与设备具体视图
+
+[Three ways ti set specific DeviceFamily XAML Views in UWP](http://igrali.com/2015/08/02/three-ways-to-set-specific-devicefamily-xaml-views-in-uwp/)
+
+实现不同设备有不同的XAML Views。
+
+###21.数据绑定及相关控件
+
+```c#
+<Page
+
+  ...
+    
+  xmlns:data="using:xBindDataExample.Models">
+  <Page.Resources>
+    <DataTemplate x:DataType="data:Book" x:Key="BookDataTemplate">
+      <StackPanel HorizontalAlignment="Center">
+        <Image Source="{x:Bind CoverImage}" />
+        <TextBlock Text="{x:Bind Title}" />
+        <TextBlock Text="{x:Bind Author}" />
+      </StackPanel>
+    </DataTemplate>
+  </Page.Resources>
+
+  ...
+
+  <GridView ItemsSource="{x:Bind Books}" 
+    IsItemClickEnabled="True" 
+    ItemClick="GridView_ItemClick"
+    ItemTemplate="{StaticResource BookDataTemplate}">
+  </GridView>
+
+  ...
+
+
+Code Behind
+
+------------
+
+public sealed partial class MainPage : Page
+{
+  private List<Book> Books;
+  public MainPage()
+  {
+    this.InitializeComponent();
+    Books = BookManager.GetBooks();
+  }
+```
+
+### 22.将DataBound控件保持在最新状态
+
+If the contents of `List<T>` will change, make sure you use `ObservableCollection<T> ` instead!
+
+ObservableCollection<> 保持监视和监听 
+当集合的内容改变时，它会提醒GridView更新从而达到实时更新的效果。
+
+Binding是动态绑定，Bind是静态绑定。使用Bind的时候，如果修改了绑定的对象，即将原来的替换成新的，那有可能在编译的时候出现错误。原因是Bind采用的是预编译，仍使用的是旧的代码。此时我们可以剪切data tempalate，然后等待一会再粘贴回去。
+
+### 23.MVVM
+
+MVVM means Model View View Model
+
+### 24.User Control
+
+如果你想使用VisualStateManager以及AdaptiveTriggers来调整你的数据模板中的控件，则需要User Control。
+
+If you intend to combine the VisualStateManager with data bound controls, you will need to put your Data Template code inside of a User Control, then create the VisualStateManager code inside of the User Control.
+
+1) Create a User Control.
+
+2) Cut the Data Template out of the `MainPage.xaml` and copy it into the User Control.
+
+3) Reference the User Control from inside the Data Template:
+
+```xml
+<local:ContactTemplate HorizontalAli gnment="Stretch" VerticalAlignment="Stretch" />
+```
+
+4) Modeify the contents of the User Control changing x:Bind statement to utilize object. Property notation：
+
+```xml
+<UserControl>
+  <StackPanel>
+    <Image Source="{x:Bind Contact.AvatarPath}" />
+    <TextBlock Text="{x:Bind Contact.FirstName}" />
+    <TextBlock Text="{x:Bind Contact.LastName}" />
+  </StackPanel>
+</UserControl>
+```
+
+5) Add this in the User Control's Code behind：
+
+```c#
+public Models.Contact Contact { get { return this.DataContext as Models.Contact; } }
+public ContactTemplate()
+{
+  this.InitializeComponent();
+  this.DataContextChanged += (s, e) => Bindings.Update();
+}
+```
+
+### 25.Converter
+
+(1) 创建Converter文件夹，在其中加入一个类文件：BooleanToVisibilityConverter，代码如下：
+
+```c#
+using System;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Data;
+
+
+namespace Todos.Converters
+{
+    public class BooleanToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)         {
+            bool visibility = (bool)value;
+            return visibility ? Visibility.Visible : Visibility.Collapsed;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, string language) {
+            throw new NotImplementedException();
+        }
+    }
+}
+```
+
+(2) 在需要使用的页面定义命名空间：
+
+```c#
+xmlns:c="using:Todos.Converters"
+```
+
+(3) 调用转换器
+
+```xml
+<Line Grid.Column="2" Stretch="Fill" Stroke="Black" StrokeThickness="2" X1="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Visibility= "{Binding IsChecked, ElementName=MyCheckBox, Converter={StaticResource booleanToVisibilityConverter}}" />
+```
+
+### 26.磁贴
