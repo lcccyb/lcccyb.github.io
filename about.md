@@ -5,19 +5,12 @@ description: "cyb的米奇妙妙屋"
 header-img: "img/green.jpg"
 ---
 
-<center>
-    <p><img src="http://openmindclub.qiniudn.com/omt/WhiteAvatar.jpg" align="center"></p>
-</center>
 
 我是cyb，这个博客什么都有，不论是学习资料还是游戏攻略。
 
 ## 人生观
 
 自己认为的有价值的事物，值得付出时间，也值得付出金钱。
-
-<center>
-    <p><img src="http://openmindclub.qiniudn.com/omt/WechatPay02.jpg" align="center"></p>
-</center>
 
 
 ## 最近在干嘛？
