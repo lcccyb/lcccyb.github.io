@@ -2,7 +2,7 @@
 layout: page
 title: "About"
 description: "cyb的米奇妙妙屋" 
-header-img: "img/green.jpg"
+header-img: "img/black.jpg"
 ---
 
 
