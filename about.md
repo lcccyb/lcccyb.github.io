@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "浮生如梦"
+title: "About"
 description: "cyb的博客" 
 header-img: "img/green.jpg"
 ---
