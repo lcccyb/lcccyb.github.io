@@ -6,6 +6,6 @@
 
 ## 说明
 
-此博客模板 Fork 自仓库：[简单直接可用博客模板](https://github.com/cnfeat/cnfeat.github.io)
+本博客使用jekyll+github搭建（后来发现Hexo搭建也挺不错，不过我jekyll都配置好了就懒得迁移了）
 
 配套说用说明：[如何搭建一个独立博客——简明 GitHub Pages教程](https://www.jianshu.com/p/05289a4bc8b2)
