@@ -2,7 +2,7 @@
 layout: post
 title: 数据库课本知识总结
 date: 2018-5-12
-categories: Book
+categories: blog
 tags:[数据库]
 description: Database
 ---
