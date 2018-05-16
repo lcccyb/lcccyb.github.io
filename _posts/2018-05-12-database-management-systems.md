@@ -4,7 +4,7 @@ title: 数据库课本知识总结
 date: 2018-5-12
 categories: blog
 tags:[数据库]
-description: Database
+description: Database。
 ---
 
 # 第1章 数据库系统概述
