@@ -1,9 +1,9 @@
-```
+---
 layout: page
 title: wiki
 descrption: 一些必要的记录
 header-img: img/facebook.jpg
-```
+---
 
 > 指令那么多，怎么能记住。
 
