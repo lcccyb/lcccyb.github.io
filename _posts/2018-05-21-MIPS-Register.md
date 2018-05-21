@@ -2,7 +2,7 @@
 layout: post
 title: MIPS通用寄存器
 date: 2018-5-21
-categories: blog
+categories: study
 tags: [MIPS]
 description: MIPS学习。
 ---
