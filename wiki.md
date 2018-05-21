@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Wiki
-descrption: 一些必要的记录
+description: 一些必要的记录
 header-img: img/facebook.jpg
 ---
 
