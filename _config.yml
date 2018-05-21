@@ -46,13 +46,31 @@ defaults:
       author: "cyb" # 你的名字
       header-img: "img/green.jpg" # We don't want posts without a header image, that whould mean white on white
 
-# Comments 
-comments :
-  provider : disqus # 使用 disqus 评论模块，读者翻墙才能看见
-  duoshuo :
-    short_name :  # 填写你的 disqus id
-  disqus :
-      short_name :  # 填写你的 disqus id
+# ---------------- #
+#      Comments    #
+# ---------------- #
+# support provider: disqus, gitment, gitalk
+comments_provider: gitalk
+# !!!重要!!! 请修改下面这些信息为你自己申请的
+# !!!Important!!! Please modify infos below to yours
+# https://disqus.com
+disqus:
+    username: 
+# https://imsun.net/posts/gitment-introduction/
+gitment:
+    owner: lcccyb
+    repo: blog-comments
+    oauth:
+        client_id: a68535be3e673c25fcfa
+        client_secret: bb8e8cffd43e052ca2843fa7eaff198400243605
+# https://github.com/gitalk/gitalk#install
+gitalk:
+    owner: lcccyb
+    repo: blog-comments
+    clientID: a68535be3e673c25fcfa
+    clientSecret: bb8e8cffd43e052ca2843fa7eaff198400243605
+# 在使用其它评论组件时可点击显示 Disqus
+lazy_load_disqus : false
 
 # Analytics and webmaster tools stuff goes here
 google_analytics:  # 填写你  google_analytics id
