@@ -1,7 +1,7 @@
 ---
 layout: page
-title: "Milestone"
-description: "代表作"
+title: "Categories"
+description: "文章分类"
 header-img: "img/zhihu.jpg"
 ---
 
