@@ -6,7 +6,7 @@
 
 ## 说明
 
-本博客使用jekyll+github搭建（Hexo感觉更好看但是真的不会用呜呜呜）
+本博客使用jekyll+github搭建
 
 配套说用说明：[如何搭建一个独立博客——简明 GitHub Pages教程](https://www.jianshu.com/p/05289a4bc8b2)
 
