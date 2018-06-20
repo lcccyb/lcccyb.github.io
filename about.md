@@ -5,7 +5,6 @@ description: "cyb的米奇妙妙屋"
 header-img: "img/black.jpg"
 ---
 
-
 我是cyb，这个博客什么都有，不论是学习资料还是游戏攻略。
 
 ## 人生观
@@ -27,6 +26,14 @@ header-img: "img/black.jpg"
 ## 联系
 
 邮箱：chenyanbin.1997@163.com
+
+## 其他说明
+
+我舍友的网站：
+
+[星皮头](http://utilcoder.com/)
+
+[皮皮秀](http://icytown.com/)
 
 
 
