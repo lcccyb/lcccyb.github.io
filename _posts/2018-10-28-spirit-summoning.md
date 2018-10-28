@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [万灵召唤]第一章 再睡一会
+title: 【万灵召唤】第一章 再睡一会
 date: 2018-10-28
 categories: 小说
 tags:
