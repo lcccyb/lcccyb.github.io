@@ -1,10 +1,10 @@
 ---
 layout: post
-title: 《计算机网络自顶向下方法》总结
+title: 《编译原理》龙书笔记
 date: 2018-11-5
 categories: study
 tags: 
-  - 计算机网络
+  - 编译原理
 ---
 
 # 第二章 一个简单的语法制导翻译器
