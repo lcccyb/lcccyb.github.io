@@ -9,5 +9,3 @@
 本博客使用jekyll+github搭建
 
 配套说用说明：[如何搭建一个独立博客——简明 GitHub Pages教程](https://www.jianshu.com/p/05289a4bc8b2)
-
-本来还有一种我觉得更好看的模板，但是使用起来有各种bug，又没时间调试，就暂时使用这个了
