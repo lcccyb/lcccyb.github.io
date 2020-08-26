@@ -7,5 +7,3 @@
 ## 说明
 
 本博客使用jekyll+github搭建
-
-配套说用说明：[如何搭建一个独立博客——简明 GitHub Pages教程](https://www.jianshu.com/p/05289a4bc8b2)
