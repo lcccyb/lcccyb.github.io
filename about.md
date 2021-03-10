@@ -72,6 +72,12 @@ header-img: "img/black.jpg"
 
 [Real World Haskell 中文版](http://cnhaskell.com/)
 
+[Docker —— 从入门到实践](https://yeasy.gitbook.io/docker_practice/)
+
+[区块链技术指南](https://yeasy.gitbook.io/blockchain_guide/)
+
+
+
 
 
 
